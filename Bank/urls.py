@@ -9,8 +9,9 @@ from django.conf import settings
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('login', views.login_id, name = 'login'),
+    path('logout', views.logout_request, name = 'logout'),
     path('register', views.register, name = 'register'),
-    path('home', views.login_id, name = 'home'),
+    path('home', views.home_page, name = 'home'),
     path('home/loan', views.get_loan, name = 'loan'),
     path('home/profile', views.profile, name = 'profile'),
     path('home/profile/update', views.update, name = 'update'),

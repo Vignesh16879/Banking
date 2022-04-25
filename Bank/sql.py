@@ -64,25 +64,37 @@ def get_user_info(user_id):
 def update_user_details(user_id, a):
     user_dat = get_user_info(user_id)
     
-    if(a == 1): #Address
+    if(1 in a): #Address
         mycursor = mydb.cursor()
         SQL_Query = "UPDATE Customer_Address SET house_no = %s, apartment_name = %s, place = %s, city =%s, state = %s, country =%s WHERE customer_id = {user_id}"
         Table_Values = [()]
         mycursor.execute(SQL_Query, Table_Values)
 
-    if(a == 2): #Email / Recovery Email
+    if(2 in a): #Email / Recovery Email
         mycursor = mydb.cursor()
         SQL_Query = "UPDATE Customer_Account_Details SET email = %s, recovery_email = %s WHERE customer_id = {user_id}"
         Table_Values = [()]
         mycursor.execute(SQL_Query, Table_Values)
         
-    if(a == 3): #Password / Security Code / Secuirty Hint
+    if(1 in a): #Password / Security Code / Secuirty Hint
         mycursor = mydb.cursor()
         SQL_Query = "UPDATE Customer_Account_Details SET passward = %s, security_code = %s, security_hint = %s WHERE customer_id = {user_id}"
         Table_Values = [()]
         mycursor.execute(SQL_Query, Table_Values)
         
     mydb.commit()
+    
+    return True
+
+
+def issuse_loan(user_id, user_loan):
+    mycursor = mydb.cursor()
+    SQL_Query = "INSERT INTO Loan VALUES(%s, %s, %s, %s, %s, %s)"
+    Table_Values = [()]
+    mycursor.execute(SQL_Query, Table_Values)
+    
+    if(mycursor.rowcount == 0):
+        return False
     
     return True
 
@@ -425,7 +437,7 @@ def retrive_data():
 
     # Loan
     mycursor.execute("CREATE TABLE Loan (customer_id INT PRIMARY KEY, loan_id INT PRIMARY KEY, amount INT, rate_of_interset FLOAT, date_of_issue DATE, no_of_months_due INT")
-    SQL_Query = "INSERT INTO Loan VALUES (%s, %s, %s, %s)"
+    SQL_Query = "INSERT INTO Loan VALUES (%s, %s, %s, %s, %s, %s)"
     Table_Values = [
         (),
         ]

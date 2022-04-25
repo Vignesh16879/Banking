@@ -43,14 +43,14 @@
         <div class="row align-items-center">
           
           <div class="col-6 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="index.html" class="h2 mb-0">Dragon Bank<span class="text-primary">.</span> </a></h1>
+            <h1 class="mb-0 site-logo"><a href="{% url 'home' %}" class="h2 mb-0">Dragon Bank<span class="text-primary">.</span> </a></h1>
           </div>
 
           <div class="col-12 col-md-10 d-none d-xl-block">
             <nav class="site-navigation position-relative text-right" role="navigation">
 
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li><a href="%views 'home_page' %" class="nav-link">Home</a></li>
+                <li><a href="{% url 'home' %}" class="nav-link">Home</a></li>
                 {% comment %} <li><a href="#blog-section" class="nav-link">Login</a></li> {% endcomment %}
                 <li><a href="{% url 'register' %}" class="nav-link">Register</a></li>
                 <li><a href="#blog-section" class="nav-link">Blog</a></li>
@@ -98,22 +98,156 @@
 
           
           <div class="col-md-10 mt-lg-5 text-center">
-            <div class="single-text owl-carousel">
+            <div>
               <div class="slide">
                 <h1 class="text-uppercase" data-aos="fade-up">Login Page</h1>
                 <form method = "POST">
-                    <input type = '' name = 'id' placeholder = 'Enter your Id or Adhar no'/>
-                    <br />
-                    <input type = 'text' name = 'password' placeholder = 'Enter your Password'/>
-                    <br/>
-                    <button target="_blank" class="btn  btn-primary mr-2 mb-2" type = 'submit'> Login </button>
-                </form>
+                  {% csrf_token %}
+                  <div>Id/ Adhar no.: {{ form.user_id }} </div>
+                  <div>Password: {{ form.user_password }} </div>
+
+                  <button target="_blank" class="btn  btn-primary mr-2 mb-2" type = 'submit'> Login</button>
+              </form>
               </div>
             </div>
           </div>
             
         </div>
       </div>
+
+    <section class="site-section" id="about-section">
+        <div class="col-12 text-center" data-aos="fade">
+          <h2 class="section-title">About US</h2>
+        </div>
+        <div class="container">
+  
+          <div class="row">
+            <div class="col-lg-6 mb-5" data-aos="fade-up" data-aos-delay="">
+              <figure class="circle-bg">
+              <img src="images/img_4.jpg" alt="Unable to load image" class="img-fluid">
+              </figure>
+            </div>
+            <div class="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
+              
+  
+              <div class="row">
+  
+                
+                
+                <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="">
+                  <div class="unit-4 d-flex">
+                    <div class="unit-4-icon mr-4 mb-3"><span class="text-primary flaticon-head"></span></div>
+                    <div>
+                      <h3>Bank Loan</h3>
+                      <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                      <p class="mb-0"><a href="#">Learn More</a></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-4" data-aos="fade-up" data-aos-delay="100">
+                  <div class="unit-4 d-flex">
+                    <div class="unit-4-icon mr-4 mb-3"><span class="text-primary flaticon-smartphone"></span></div>
+                    <div>
+                      <h3>Banking Consulation </h3>
+                      <p>Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+                      <p class="mb-0"><a href="#">Learn More</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+  
+              
+            </div>
+          </div>
+  
+          
+        </div>
+      </section>
+
+
+
+      <div class="row site-section" id="faq-section">
+        <div class="col-12 text-center" data-aos="fade">
+          <h2 class="section-title">Frequently Ask Questions</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+          
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">What available is refund period?</h3>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+          
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">What available is refund period?</h3>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">Where are you from?</h3>
+            <p>Voluptatum nobis obcaecati perferendis dolor totam unde dolores quod maxime corporis officia et. Distinctio assumenda minima maiores.</p>
+          </div>
+          
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">What is your opening time?</h3>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+          
+          <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-black h4 mb-4">What available is refund period?</h3>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          </div>
+        </div>
+      </div>
+
+
+      <section class="site-section bg-light" id="contact-section" data-aos="fade">
+        <div class="container">
+          <div class="row mb-5">
+            <div class="col-12 text-center">
+              <h2 class="section-title mb-3">Contact Us</h2>
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-md-4 text-center">
+              <p class="mb-4">
+                <span class="icon-room d-block h2 text-primary"></span>
+                <span>Block:C-4-C, 168, Janakpuri, New Delhi, India</span>
+              </p>
+            </div>
+            <div class="col-md-4 text-center">
+              <p class="mb-4">
+                <span class="icon-phone d-block h2 text-primary"></span>
+                <a href="tell: 8178699520">+91 8178-699-520</a>
+              </p>
+            </div>
+            <div class="col-md-4 text-center">
+              <p class="mb-0">
+                <span class="icon-mail_outline d-block h2 text-primary"></span>
+                <a href="mailto:vignesh20152@iiitd.ac.in">vignesh20152@iiitd.ac.in</a>
+              </p>
+            </div>
+          </div>
+        </section>
 
       <footer class="site-footer">
         <div class="container">
@@ -122,16 +256,15 @@
               <div class="row">
                 <div class="col-md-5">
                   <h2 class="footer-heading mb-4">About Us</h2>
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque facere laudantium magnam voluptatum autem. Amet aliquid nesciunt veritatis aliquam.</p>
+                  <p>Dragon Bank: </p>
                 </div>
                 <div class="col-md-3 ml-auto">
                   <h2 class="footer-heading mb-4">Quick Links</h2>
                   <ul class="list-unstyled">
-                    <li><a href="#about-section" class="smoothscroll">Terms</a></li>
-                    <li><a href="#about-section" class="smoothscroll">Policy</a></li>
+                    <li><a href="Bank/templates/pdf/terms.pdf" class="smoothscroll">Terms</a></li>
+                    <li><a href="Bank/templates/pdf/policy.pdf" class="smoothscroll">Policy</a></li>
                     <li><a href="#about-section" class="smoothscroll">About Us</a></li>
-                    <li><a href="#services-section" class="smoothscroll">Services</a></li>
-                    <li><a href="#testimonials-section" class="smoothscroll">Testimonials</a></li>
+                    <li><a href="Bank/templates/pdf/services.pdf" class="smoothscroll">Services</a></li>
                     <li><a href="#contact-section" class="smoothscroll">Contact Us</a></li>
                   </ul>
                 </div>
@@ -169,6 +302,10 @@
         </div>
       </footer>
   
+      
+          
+
+
     </div> <!-- .site-wrap -->
   
     <script src="Bank/templates/js/jquery-3.3.1.min.js"></script>

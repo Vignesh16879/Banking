@@ -8,6 +8,7 @@ from django.contrib import messages
 from .forms import *
 from .sql import *
 import mysql.connector
+from random import randint, randrange
 
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -49,6 +50,7 @@ def index(request):
     return render(request, "index.html")
 
 def login_id(request):
+    form = inp_user()
     assert isinstance(request, HttpRequest)
     global user_authenticated
     if user_authenticated:
@@ -56,10 +58,10 @@ def login_id(request):
         return redirect("Bank:home")
 
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
+        form = inp_user(request=request, data=request.POST)
         if form.is_valid():
-            user_id = form.cleaned_data.get('User Id')
-            password = form.cleaned_data.get('Password')
+            user_id = form.cleaned_data.get('user_id')
+            password = form.cleaned_data.get('user_password')
             
             valid_user_details = check_user(user_id, password)
             if(valid_user_details):
@@ -71,11 +73,17 @@ def login_id(request):
             else:       
                 messages.error(request, valid_user_details)
            
-    form = AuthenticationForm()
+    # form = inp_user()
     
     context = {}
     
-    return render(request, "login.html", context = context)
+    return render(
+        request, 
+        "login.html", 
+        {
+            'form' : form
+        }
+    )
 
 def login(request, user_id):
     return render(request, "user.html")
@@ -91,6 +99,12 @@ def logout_request(request):
     return redirect("Bank:index")
 
 
+def random_with_N_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)
+
+
 def register(request):
     form = Customer_Details()
     if request.method == 'POST':
@@ -98,34 +112,43 @@ def register(request):
         
         if form.is_valid():
             user_dat = Customer_Details()
-            user_dat = form.cleaned_data.get('User Id')
-            password = form.cleaned_data.get('Password')
-            user_dat.customer_id = form.cleaned_data.get("")
-            user_dat.customer_adhar_no = form.cleaned_data.get("")
-            user_dat.customer_name = form.cleaned_data.get("")
-            user_dat.customer_name_first = form.cleaned_data.get("")
-            user_dat.customer_name_middle = form.cleaned_data.get("")
-            user_dat.customer_name_last = form.cleaned_data.get("")
-            user_dat.customer_dob = form.cleaned_data.get("")
-            user_dat.customer_age = form.cleaned_data.get("")
-            user_dat.customer_house_no = form.cleaned_data.get("")
-            user_dat.customer_appartment_name = form.cleaned_data.get("")
-            user_dat.customer_place = form.cleaned_data.get("")
-            user_dat.customer_city = form.cleaned_data.get("")
-            user_dat.customer_state = form.cleaned_data.get("")
-            user_dat.customer_country = form.cleaned_data.get("")
-            user_dat.customer_email = form.cleaned_data.get("")
-            user_dat.customer_recovery_email = form.cleaned_data.get("")
-            user_dat.customer_security_code = form.cleaned_data.get("")
-            user_dat.customer_security_hint = form.cleaned_data.get("")
-            user_dat.customer_phone_no = form.cleaned_data.get("")
-            user_dat.customer_account_id = form.cleaned_data.get("")
-            user_dat.customer_balance = form.cleaned_data.get("")
+            # user_dat = form.cleaned_data.get('User Id')
+            # password = form.cleaned_data.get('Password')
+            m = 1
+            
+            while(m > 0):
+                user_dat.customer_id = random_with_N_digits(8)
+                mycursor = mydb.cursor()
+                mycursor.execute("SELECT * FROM Customer WHERE customer_id = {user_dat.customer_id}")
+                m = mycursor.rowcount
+                            
+            user_dat.customer_adhar_no = form.cleaned_data.get("customer_adhar_no")
+            user_dat.customer_name = form.cleaned_data.get("customer_name")
+            user_dat.customer_name_first = form.cleaned_data.get("customer_name_first")
+            user_dat.customer_name_middle = form.cleaned_data.get("customer_name_middle")
+            user_dat.customer_name_last = form.cleaned_data.get("customer_name_last")
+            user_dat.customer_dob = form.cleaned_data.get("customer_dob")
+            user_dat.customer_age = form.cleaned_data.get("customer_age")
+            user_dat.customer_house_no = form.cleaned_data.get("customer_house_no")
+            user_dat.customer_appartment_name = form.cleaned_data.get("customer_appartment_name")
+            user_dat.customer_place = form.cleaned_data.get("customer_place")
+            user_dat.customer_city = form.cleaned_data.get("customer_city")
+            user_dat.customer_state = form.cleaned_data.get("customer_state")
+            user_dat.customer_country = form.cleaned_data.get("customer_country")
+            user_dat.customer_email = form.cleaned_data.get("customer_email")
+            user_dat.customer_recovery_email = form.cleaned_data.get("customer_recovery_email")
+            user_dat.customer_security_code = form.cleaned_data.get("customer_security_code")
+            user_dat.customer_security_hint = form.cleaned_data.get("customer_security_hint")
+            user_dat.customer_phone_no = form.cleaned_data.get("customer_phone_no")
+            user_dat.customer_account_id = form.cleaned_data.get("customer_account_id")
+            user_dat.customer_balance = form.cleaned_data.get("customer_balance")
             
             if(insert_user_data(user_dat)):
                 val = "Account has been Created"
+                return redirect("Bank:home")
             else:
                 val = "Due to wrong/incorrect information account couldn't be created"
+                return redirect("Bank:register")
             
            
     # form = AuthenticationForm()
@@ -141,8 +164,25 @@ def register(request):
 
 
 def get_loan(request):
+    form = loan()
+    if request.method == 'POST':
+        form = Customer_Details(request=request, data=request.POST)
+        
+        if form.is_valid():
+            user_loan = loan()
+            
+            if(issuse_loan(user_id, user_loan)):
+                val = "Loan Provided"
+            else:
+                val = "Loan ca't be provided"
     
-    return render(request, "Loan/loan.html")
+    return render(
+        request, 
+        "Loan/loan.html",
+        {
+            'form' : form
+        }
+    )
 
 
 def profile(request):
@@ -151,7 +191,15 @@ def profile(request):
 
 
 def update(request):
-    return render(request, "update.html")
+    form = Customer_Details()
+    form = get_user_info(user_id)
+    return render(
+        request, 
+        "update.html",
+        {
+            'form' : form
+        }
+    )
 
 
 def transaction(request):
