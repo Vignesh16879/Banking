@@ -6,7 +6,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, authenticate, login
 from django.contrib import messages
 from .forms import *
-from .sql import *
 import mysql.connector
 from random import randint, randrange
 
@@ -18,7 +17,6 @@ mydb = mysql.connector.connect(
 )
 
 
-
 user_id = NULL
 user_authenticated = False
 
@@ -28,6 +26,8 @@ def home(request):
 
 
 def home_page(request):
+    global user_authenticated
+    
     if(user_authenticated):
         return render(request, "user.html")
     
@@ -35,8 +35,9 @@ def home_page(request):
 
 
 def intialize_data():
-    mycursor = mydb.cursor()
-    mycursor.execute("SHOW TABLES")
+    mycursor = mydb.cursor()    
+    mycursor.execute("SHOW TABLES;")
+    myresult = mycursor.fetchall()
     
     if(mycursor.rowcount == 0):
         retrive_data()
@@ -45,7 +46,7 @@ def intialize_data():
 
 
 def index(request):
-    # intialize_data()
+    intialize_data()
     
     return render(request, "index.html")
 
@@ -53,23 +54,27 @@ def login_id(request):
     form = inp_user()
     assert isinstance(request, HttpRequest)
     global user_authenticated
+    
     if user_authenticated:
         messages.error(request, "You are already logged in.")
-        return redirect("Bank:home")
+       
+        return redirect("home")
 
     if request.method == 'POST':
-        form = inp_user(request=request, data=request.POST)
+        form = inp_user(request.POST)
+        
         if form.is_valid():
             user_id = form.cleaned_data.get('user_id')
-            password = form.cleaned_data.get('user_password')
+            user_password = form.cleaned_data.get('user_password')
             
-            valid_user_details = check_user(user_id, password)
+            valid_user_details = check_user(user_id, user_password)
+            
             if(valid_user_details):
                 user_authenticated = True
                 login(request, user_id)
-                username = get_user_name(user_id)
-                messages.success(request, f"You are now logged in as {username}")
-                return redirect("Bank:home")
+                user_name = get_user_name(user_id)
+                messages.success(request, f"You are now logged in as {user_name}")
+                return redirect("home")
             else:       
                 messages.error(request, valid_user_details)
            
@@ -84,29 +89,33 @@ def login_id(request):
             'form' : form
         }
     )
+    
 
 def login(request, user_id):
     return render(request, "user.html")
 
 
-     
     
 def logout_request(request):
     assert isinstance(request, HttpRequest)
     logout(request)
     messages.success(request, "Logged out successfully!")
+    global user_authenticated 
     user_authenticated = False
-    return redirect("Bank:index")
+    
+    return redirect("index")
 
 
 def random_with_N_digits(n):
     range_start = 10**(n-1)
     range_end = (10**n)-1
+    
     return randint(range_start, range_end)
 
 
 def register(request):
     form = Customer_Details()
+   
     if request.method == 'POST':
         form = Customer_Details(request=request, data=request.POST)
         
@@ -145,10 +154,10 @@ def register(request):
             
             if(insert_user_data(user_dat)):
                 val = "Account has been Created"
-                return redirect("Bank:home")
+                return redirect("home")
             else:
                 val = "Due to wrong/incorrect information account couldn't be created"
-                return redirect("Bank:register")
+                return redirect("register")
             
            
     # form = AuthenticationForm()
@@ -164,7 +173,11 @@ def register(request):
 
 
 def get_loan(request):
+    if(user_authenticated):
+        return redirect("home")
+        
     form = loan()
+    
     if request.method == 'POST':
         form = Customer_Details(request=request, data=request.POST)
         
@@ -186,11 +199,24 @@ def get_loan(request):
 
 
 def profile(request):
+    if(user_authenticated == False):
+        return redirect("login")
+    
     user_dat = get_user_info(user_id)
-    return render(request, "profile.html")
+    
+    return render(
+        request, 
+        "profile.html", 
+        {
+            'user_dat' : user_dat
+        }
+    )
 
 
 def update(request):
+    if(user_authenticated):
+        return redirect("home")
+    
     form = Customer_Details()
     form = get_user_info(user_id)
     return render(
@@ -203,14 +229,28 @@ def update(request):
 
 
 def transaction(request):
+    if(user_authenticated):
+        return redirect("home")
+    
     tran = transaction()
-    return render(request, "transaction.html")
+    
+    return render(
+        request, 
+        "transaction.html"
+    )
 
 
 def remove_account(request):
+    if(user_authenticated):
+        return redirect("home")
+    
     if(remove_user(user_id)):
         messages.success(request, "Account Removed successfully!")
+        logout_request(request)
     else:
         messages.success(request, "Can't Resmove account due to pending loan(s)")
         
-    return render(request, "remove_acc.html")
+    return render(
+        request, 
+        "remove_acc.html"
+    )

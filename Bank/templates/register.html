@@ -90,11 +90,13 @@
 
           
           <div class="col-md-12 mt-lg-5 text-center">
-            <div class="single-text owl-carousel">
-              <div class="slide">
+            <div>
+              <div>
                 <h1 class="text-uppercase" data-aos="fade-up">Registeration Page</h1>
                 <form method = "POST">
                     {% csrf_token %}
+                    {% comment %} <label for="your_name">Your name: </label> {% endcomment %}
+                    {% comment %} <input id="your_name" name="your_name" size = "20" value= {{ form.customer_name_first }}  {{ form.customer_name_middle }} {{ form.customer_name_last }}> {% endcomment %}
 				            <div>Name: {{ form.customer_name_first }}  {{ form.customer_name_middle }} {{ form.customer_name_last }} </div>
                     <div>Age / DOB: {{form.customer_age }} {{ form.customer_dob }} </div>
                     <div>Address Line1: {{ form.customer_house_no }} {{ form.customer_appartment_name }} {{ form.customer_place }} </div>
@@ -182,44 +184,44 @@
           
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
           <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
           
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
 
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
           <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
           
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
         </div>
         <div class="col-lg-6">
 
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">Where are you from?</h3>
-            <p>Voluptatum nobis obcaecati perferendis dolor totam unde dolores quod maxime corporis officia et. Distinctio assumenda minima maiores.</p>
+            <a>Voluptatum nobis obcaecati perferendis dolor totam unde dolores quod maxime corporis officia et. Distinctio assumenda minima maiores.</a>
           </div>
           
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">What is your opening time?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
 
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
           <h3 class="text-black h4 mb-4">Can I accept both Paypal and Stripe?</h3>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
           
           <div class="mb-5" data-aos="fade-up" data-aos-delay="100">
             <h3 class="text-black h4 mb-4">What available is refund period?</h3>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <a>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</a>
           </div>
         </div>
       </div>
@@ -236,7 +238,7 @@
             <div class="col-md-4 text-center">
               <p class="mb-4">
                 <span class="icon-room d-block h2 text-primary"></span>
-                <span>Block:C-4-C, 168, Janakpuri, New Delhi, India</span>
+                <a href="location:">Block:C-4-C, 168, Janakpuri, New Delhi, India</a>
               </p>
             </div>
             <div class="col-md-4 text-center">
